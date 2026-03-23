@@ -38,8 +38,8 @@ export async function generateGameCommentary(
   messages.push({
     role: 'user',
     content: [
-      { type: 'image', image: imageData },
       { type: 'text', text: '画面の状況を実況してください。' },
+      { type: 'image', image: imageData },
     ],
   })
 
