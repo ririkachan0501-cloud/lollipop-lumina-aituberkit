@@ -195,9 +195,20 @@ export function useGameCommentaryMode({
 
     // AI実況コメント生成
     try {
+      // chatLogから直近メッセージを取得（視聴者コメントとの文脈共有）
+      const chatLog = homeStore.getState().chatLog
+      const recentMessages = chatLog
+        .filter((m) => m.role === 'user' || m.role === 'assistant')
+        .slice(-5)
+        .map((m) => ({
+          role: m.role,
+          content: typeof m.content === 'string' ? m.content : '',
+        }))
+
       const result = await generateGameCommentary(
         commentaryHistoryRef.current,
-        imageData
+        imageData,
+        recentMessages
       )
 
       if (!result) {
@@ -210,11 +221,12 @@ export function useGameCommentaryMode({
       // ring bufferに追加
       addToHistory(result.text)
 
-      // chatLogにも保存（opt-in）
+      // chatLogに保存（YouTube/Mastraとの文脈共有用）
       if (gameCommentarySaveToChat) {
         homeStore.getState().upsertMessage({
           role: 'assistant',
-          content: result.text,
+          content: `[実況] ${result.text}`,
+          timestamp: new Date().toISOString(),
         })
       }
 

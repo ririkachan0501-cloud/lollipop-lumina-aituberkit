@@ -24,7 +24,7 @@ export const DEFAULT_GAME_COMMENTARY_CONFIG: GameCommentarySettings = {
     'あなたはゲーム実況者です。画面に表示されているゲームの状況を見て、テンション高く実況してください。',
   gameCommentaryImageQuality: 0.7,
   gameCommentaryResizeWidth: 1024,
-  gameCommentarySaveToChat: false,
+  gameCommentarySaveToChat: true,
 }
 
 // Interval validation constants

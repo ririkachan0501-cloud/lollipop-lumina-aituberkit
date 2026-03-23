@@ -21,7 +21,8 @@ const GAME_COMMENTARY_SYSTEM_PROMPT_SUFFIX = `
  */
 export async function generateGameCommentary(
   commentaryHistory: string[],
-  imageData: string
+  imageData: string,
+  recentChatMessages?: Array<{ role: string; content: string }>
 ): Promise<{ text: string; emotion: EmotionType } | null> {
   const ss = settingsStore.getState()
   const characterPrompt = ss.systemPrompt || ''
@@ -36,6 +37,13 @@ export async function generateGameCommentary(
     GAME_COMMENTARY_SYSTEM_PROMPT_SUFFIX
 
   const messages: Message[] = [{ role: 'system', content: systemPrompt }]
+
+  // chatLogの直近メッセージを文脈として追加（視聴者コメントを把握）
+  if (recentChatMessages && recentChatMessages.length > 0) {
+    for (const msg of recentChatMessages) {
+      messages.push({ role: msg.role, content: msg.content })
+    }
+  }
 
   // 実況履歴を文脈メッセージとして追加（テキストのみ、画像なし）
   for (const history of commentaryHistory) {
