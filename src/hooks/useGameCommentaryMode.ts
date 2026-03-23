@@ -52,6 +52,8 @@ export function useGameCommentaryMode({
   const ss = settingsStore.getState()
   const gameCommentaryEnabled =
     (ss as Record<string, unknown>).gameCommentaryEnabled === true
+  const gameCommentaryPlaying =
+    (ss as Record<string, unknown>).gameCommentaryPlaying === true
   const gameCommentaryCaptureInterval =
     ((ss as Record<string, unknown>).gameCommentaryCaptureInterval as number) ||
     15
@@ -76,8 +78,9 @@ export function useGameCommentaryMode({
   }, [])
 
   // ----- 状態 -----
+  const isRunning = gameCommentaryEnabled && gameCommentaryPlaying
   const [state, setState] = useState<GameCommentaryState>(
-    gameCommentaryEnabled ? 'waiting' : 'disabled'
+    isRunning ? 'waiting' : 'disabled'
   )
   const [secondsUntilNextCapture, setSecondsUntilNextCapture] =
     useState<number>(gameCommentaryCaptureInterval)
@@ -277,12 +280,12 @@ export function useGameCommentaryMode({
   const resetTimer = useCallback(() => {
     clearTimers()
     setSecondsUntilNextCapture(gameCommentaryCaptureInterval)
-    if (gameCommentaryEnabled && state !== 'disabled') {
+    if (isRunning && state !== 'disabled') {
       scheduleNext()
     }
   }, [
     gameCommentaryCaptureInterval,
-    gameCommentaryEnabled,
+    isRunning,
     state,
     clearTimers,
     scheduleNext,
@@ -300,7 +303,7 @@ export function useGameCommentaryMode({
 
   // ----- 有効/無効の監視 -----
   useEffect(() => {
-    if (gameCommentaryEnabled) {
+    if (isRunning) {
       setState('waiting')
       setSecondsUntilNextCapture(gameCommentaryCaptureInterval)
       scheduleNext()
@@ -314,16 +317,11 @@ export function useGameCommentaryMode({
     return () => {
       clearTimers()
     }
-  }, [
-    gameCommentaryEnabled,
-    gameCommentaryCaptureInterval,
-    clearTimers,
-    scheduleNext,
-  ])
+  }, [isRunning, gameCommentaryCaptureInterval, clearTimers, scheduleNext])
 
   // ----- chatLog変更の監視（ユーザー入力検知） -----
   useEffect(() => {
-    if (!gameCommentaryEnabled) return
+    if (!isRunning) return
 
     const unsubscribe = homeStore.subscribe((hState, prevState) => {
       if (hState.chatLog !== prevState.chatLog && hState.chatLog.length > 0) {
@@ -341,10 +339,10 @@ export function useGameCommentaryMode({
     })
 
     return unsubscribe
-  }, [gameCommentaryEnabled, state, resetTimer, stopCommentary])
+  }, [isRunning, state, resetTimer, stopCommentary])
 
   return {
-    isActive: gameCommentaryEnabled && state !== 'disabled',
+    isActive: isRunning && state !== 'disabled',
     state,
     secondsUntilNextCapture,
     isCaptureAvailable,

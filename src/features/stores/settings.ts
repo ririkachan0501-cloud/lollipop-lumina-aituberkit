@@ -791,6 +791,7 @@ const getInitialValuesFromEnv = (): SettingsState => ({
   gameCommentaryEnabled:
     process.env.NEXT_PUBLIC_GAME_COMMENTARY_ENABLED === 'true' ||
     DEFAULT_GAME_COMMENTARY_CONFIG.gameCommentaryEnabled,
+  gameCommentaryPlaying: DEFAULT_GAME_COMMENTARY_CONFIG.gameCommentaryPlaying,
   gameCommentaryCaptureInterval:
     parseInt(process.env.NEXT_PUBLIC_GAME_COMMENTARY_CAPTURE_INTERVAL || '') ||
     DEFAULT_GAME_COMMENTARY_CONFIG.gameCommentaryCaptureInterval,

@@ -47,6 +47,8 @@ export const Menu = () => {
   const customModel = settingsStore((s) => s.customModel)
   const youtubeMode = settingsStore((s) => s.youtubeMode)
   const youtubePlaying = settingsStore((s) => s.youtubePlaying)
+  const gameCommentaryEnabled = settingsStore((s) => s.gameCommentaryEnabled)
+  const gameCommentaryPlaying = settingsStore((s) => s.gameCommentaryPlaying)
   const slideMode = settingsStore((s) => s.slideMode)
   const slideVisible = menuStore((s) => s.slideVisible)
   const chatLog = homeStore((s) => s.chatLog)
@@ -204,6 +206,18 @@ export const Menu = () => {
     }
   }, [youtubePlaying])
 
+  const toggleGameCommentary = useCallback(() => {
+    const nextPlaying = !gameCommentaryPlaying
+    settingsStore.setState({ gameCommentaryPlaying: nextPlaying })
+    if (nextPlaying) {
+      // 開始時: キャプチャが未表示なら自動で表示する
+      if (!showCapture) {
+        menuStore.setState({ showCapture: true, showWebcam: false })
+        homeStore.setState({ webcamStatus: false })
+      }
+    }
+  }, [gameCommentaryPlaying, showCapture])
+
   const toggleCapture = useCallback(() => {
     menuStore.setState(({ showCapture }) => ({ showCapture: !showCapture }))
     menuStore.setState({ showWebcam: false }) // Captureを表示するときWebcamを非表示にする
@@ -320,6 +334,17 @@ export const Menu = () => {
                         youtubePlaying: !youtubePlaying,
                       })
                     }
+                  />
+                </div>
+              )}
+              {gameCommentaryEnabled && (
+                <div className="order-5">
+                  <IconButton
+                    iconName={
+                      gameCommentaryPlaying ? '24/PauseAlt' : 'game-controller'
+                    }
+                    isProcessing={false}
+                    onClick={toggleGameCommentary}
                   />
                 </div>
               )}

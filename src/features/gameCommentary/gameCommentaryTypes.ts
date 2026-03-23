@@ -7,6 +7,7 @@
 // Game commentary settings interface
 export interface GameCommentarySettings {
   gameCommentaryEnabled: boolean
+  gameCommentaryPlaying: boolean // メインページのボタンで制御（YouTubeのyoutubePlayingと同じ）
   gameCommentaryCaptureInterval: number // 秒 (10-60)
   gameCommentaryContextCount: number // 実況履歴参照数 (1-20)
   gameCommentaryPromptTemplate: string
@@ -18,6 +19,7 @@ export interface GameCommentarySettings {
 // Default configuration
 export const DEFAULT_GAME_COMMENTARY_CONFIG: GameCommentarySettings = {
   gameCommentaryEnabled: false,
+  gameCommentaryPlaying: false,
   gameCommentaryCaptureInterval: 15,
   gameCommentaryContextCount: 5,
   gameCommentaryPromptTemplate:
