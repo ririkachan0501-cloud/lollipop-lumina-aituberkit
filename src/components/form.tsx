@@ -56,18 +56,7 @@ export const Form = () => {
       let shouldCaptureImage = false
 
       if (isMultiModalSupported && (webcamStatus || captureStatus)) {
-        switch (multiModalMode) {
-          case 'always':
-            shouldCaptureImage = true
-            break
-          case 'never':
-            shouldCaptureImage = false
-            break
-          case 'ai-decide':
-            // AI判断モードの場合、とりあえず画像をキャプチャして、後でAIに判断させる
-            shouldCaptureImage = true
-            break
-        }
+        shouldCaptureImage = multiModalMode !== 'never'
       }
 
       // 画像キャプチャが必要な場合

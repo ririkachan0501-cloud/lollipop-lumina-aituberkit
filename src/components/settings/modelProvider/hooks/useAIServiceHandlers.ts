@@ -19,7 +19,7 @@ export const useAIServiceHandlers = () => {
         })
       } else if (currentState.multiModalMode === 'never') {
         settingsStore.setState({
-          multiModalMode: 'ai-decide',
+          multiModalMode: 'always',
         })
       }
     },
@@ -34,11 +34,7 @@ export const useAIServiceHandlers = () => {
     settingsStore.setState({
       selectAIService: newService,
       selectAIModel: selectedModel,
-      multiModalMode:
-        newService === 'custom-api' &&
-        currentState.multiModalMode === 'ai-decide'
-          ? 'always'
-          : currentState.multiModalMode,
+      multiModalMode: currentState.multiModalMode,
     })
   }, [])
 

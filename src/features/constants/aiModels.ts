@@ -529,7 +529,7 @@ export function isMultiModalAvailable(
   service: AIService,
   model: string,
   enableMultiModal: boolean,
-  multiModalMode: 'ai-decide' | 'always' | 'never',
+  multiModalMode: 'always' | 'never',
   customModel?: boolean
 ): boolean {
   // 利用モードが'never'の場合は常にfalse

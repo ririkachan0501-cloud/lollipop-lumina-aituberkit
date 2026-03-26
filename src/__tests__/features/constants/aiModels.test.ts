@@ -255,15 +255,6 @@ describe('aiModels', () => {
       ).toBe(false)
     })
 
-    it('should delegate to isMultiModalModelWithToggle when mode is ai-decide', () => {
-      expect(isMultiModalAvailable('openai', 'gpt-4o', true, 'ai-decide')).toBe(
-        true
-      )
-      expect(
-        isMultiModalAvailable('groq', 'gemma2-9b-it', true, 'ai-decide')
-      ).toBe(false)
-    })
-
     it('should respect enableMultiModal for bypass services', () => {
       expect(isMultiModalAvailable('azure', 'any-model', true, 'always')).toBe(
         true

@@ -30,7 +30,7 @@ function createBaseState(
     showSilenceProgressBar: true,
     continuousMicListeningMode: true,
     useSearchGrounding: false,
-    multiModalMode: 'ai-decide',
+    multiModalMode: 'always',
     enableMultiModal: true,
     customModel: false,
     idleModeEnabled: false,
@@ -192,7 +192,7 @@ describe('排他エンジン (computeExclusions)', () => {
         selectAIService: 'openai',
         slideMode: true,
         conversationContinuityMode: true,
-        multiModalMode: 'ai-decide',
+        multiModalMode: 'always',
       })
       // difyはマルチモーダル非対応
       const incoming = { selectAIService: 'dify' as const }

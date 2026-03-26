@@ -256,7 +256,7 @@ interface General {
   initialSpeechTimeout: number
   chatLogWidth: number
   imageDisplayPosition: 'input' | 'side' | 'icon'
-  multiModalMode: 'ai-decide' | 'always' | 'never'
+  multiModalMode: 'always' | 'never'
   multiModalAiDecisionPrompt: string
   enableMultiModal: boolean
   colorTheme: 'default' | 'cool' | 'mono' | 'ocean' | 'forest' | 'sunset'
@@ -607,11 +607,11 @@ const getInitialValuesFromEnv = (): SettingsState => ({
       : 'input'
   })(),
   multiModalMode: (() => {
-    const validModes = ['ai-decide', 'always', 'never'] as const
+    const validModes = ['always', 'never'] as const
     const envMode = process.env.NEXT_PUBLIC_MULTIMODAL_MODE
     return validModes.includes(envMode as any)
-      ? (envMode as 'ai-decide' | 'always' | 'never')
-      : 'ai-decide'
+      ? (envMode as 'always' | 'never')
+      : 'always'
   })(),
   multiModalAiDecisionPrompt:
     process.env.NEXT_PUBLIC_MULTIMODAL_AI_DECISION_PROMPT || '',
@@ -829,6 +829,7 @@ const getInitialValuesFromEnv = (): SettingsState => ({
 })
 
 type PersistedSettingsState = Partial<SettingsState> & {
+  multiModalMode?: SettingsState['multiModalMode'] | 'ai-decide'
   presenceGreetingMessage?: string
   presenceDepartureMessage?: string
 }
@@ -863,6 +864,10 @@ const migratePersistedSettings = (
         : []
     }
     delete migrated.presenceDepartureMessage
+  }
+
+  if (migrated.multiModalMode === 'ai-decide') {
+    migrated.multiModalMode = 'always'
   }
 
   // Game commentary migration: ensure defaults for new fields

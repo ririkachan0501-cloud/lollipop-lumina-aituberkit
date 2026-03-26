@@ -541,41 +541,14 @@ const ModelProvider = () => {
                   value={state.multiModalMode}
                   onChange={(e) =>
                     settingsStore.setState({
-                      multiModalMode: e.target.value as
-                        | 'ai-decide'
-                        | 'always'
-                        | 'never',
+                      multiModalMode: e.target.value as 'always' | 'never',
                     })
                   }
                 >
-                  {state.selectAIService !== 'custom-api' && (
-                    <option value="ai-decide">
-                      {t('MultiModalModeAIDecide')}
-                    </option>
-                  )}
                   <option value="always">{t('MultiModalModeAlways')}</option>
                   <option value="never">{t('MultiModalModeNever')}</option>
                 </select>
               </div>
-              {state.multiModalMode === 'ai-decide' &&
-                state.selectAIService !== 'custom-api' && (
-                  <div className="my-4">
-                    <div className="my-2 text-sm font-medium">
-                      {t('MultiModalAIDecisionPrompt')}
-                    </div>
-                    <textarea
-                      className="w-full px-4 py-2 bg-white hover:bg-white-hover rounded-lg text-sm"
-                      rows={3}
-                      value={state.multiModalAiDecisionPrompt}
-                      onChange={(e) => {
-                        settingsStore.setState({
-                          multiModalAiDecisionPrompt: e.target.value,
-                        })
-                      }}
-                      placeholder={t('MultiModalAIDecisionPromptPlaceholder')}
-                    />
-                  </div>
-                )}
             </div>
           )}
 
