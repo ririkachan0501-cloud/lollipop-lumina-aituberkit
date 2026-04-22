@@ -58,6 +58,7 @@ public/scripts/live2dcubismcore.min.js
 !/public/vrm/AvatarSample_A.vrm
 !/public/vrm/AvatarSample_B.vrm
 !/public/vrm/AvatarSample_C.vrm
+!/public/vrm/lollipop_lumina.vrm
 !/public/vrm/nikechan_v1.vrm
 !/public/vrm/nikechan_v2.vrm
 !/public/vrm/nikechan_v2_outerwear.vrm
@@ -65,6 +66,7 @@ public/scripts/live2dcubismcore.min.js
 # Background files
 /public/backgrounds/*
 !/public/backgrounds/bg-c.png
+!/public/backgrounds/lumina-room.jpeg
 
 # PNGTuber files
 public/pngtuber/*
