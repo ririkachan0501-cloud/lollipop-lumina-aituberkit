@@ -3,11 +3,12 @@
     "AvatarSample_A.vrm",
     "AvatarSample_B.vrm",
     "AvatarSample_C.vrm",
+    "lollipop_lumina.vrm",
     "nikechan_v1.vrm",
     "nikechan_v2.vrm",
     "nikechan_v2_outerwear.vrm"
   ],
-  "backgrounds": ["bg-c.png"],
+  "backgrounds": ["bg-c.png", "lumina-room.jpeg"],
   "live2d": [
     {
       "path": "/live2d/nike01/nike01.model3.json",
